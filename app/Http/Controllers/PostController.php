@@ -32,7 +32,25 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // middleware auth
+
+        //validation
+        $this->validate($request, [
+            'title' => 'required',
+            'body' => 'required',
+            'category_id' => 'required',
+            'user_id' => 'required'
+        ]);
+        //create category
+        $post = new Post();
+        $post->title = $request->title;
+        $post->body = $request->body;
+        $post->user_id = $request->user_id;
+        $post->category_id = $request->category_id;
+        $post->save();
+        $rPost = Post::with('user:id,name', 'category:id,name')->find($post->id);
+        //return
+        return $rPost;
     }
 
     /**
@@ -66,7 +84,23 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        // middleware auth
+
+        //validation
+        $this->validate($request, [
+            'title' => 'required',
+            'body' => 'required',
+            'category_id' => 'required',
+            'user_id' => 'required'
+        ]);
+        $post->title = $request->title;
+        $post->body = $request->body;
+        $post->user_id = $request->user_id;
+        $post->category_id = $request->category_id;
+        $post->save();
+        $rPost = Post::with('user:id,name', 'category:id,name')->find($post->id);
+        //return
+        return $rPost;
     }
 
     /**
@@ -77,6 +111,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        
+        return response(null, 204);
     }
 }

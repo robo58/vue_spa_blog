@@ -3,7 +3,7 @@
   <div>
     <div>
       <form @submit.prevent="onAdd">
-        <input id="name" v-model="name" type="text" name="name" placeholder="Add a category..." @click="isHidden = false" @blur="isHidden = true">
+        <input id="name" v-model="name" class="col-auto" type="text" name="name" placeholder="Add a category..." @click="isHidden = false" @blur="isHidden = true">
         <span v-if="!name" class="text-danger" :hidden="isHidden" v-text="errors.name" />
         <button class="btn btn-primary" :disabled="!name">
           Add
@@ -113,10 +113,12 @@ export default {
     },
 
     onDelete (category) {
-      axios.delete('/api/categories/' + category.id, { category: category })
-        .then(response => {
-          this.$delete(this.categories, this.categories.findIndex(x => x.id === category.id))
-        })
+      this.$confirm('Are you sure you want to delete this category and posts associated with it?').then(() => {
+        axios.delete('/api/categories/' + category.id, { category: category })
+          .then(response => {
+            this.$delete(this.categories, this.categories.findIndex(x => x.id === category.id))
+          })
+      }).catch(err => { console.log(err) })
     },
 
     onUpdate (category) {

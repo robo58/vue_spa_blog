@@ -16,15 +16,19 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => 'auth:api'], function () {
     Route::post('logout', 'Auth\LoginController@logout');
     Route::post('/categories', 'CategoryController@store');
-    Route::delete('/categories/{category}', 'CategoryController@destroy');
+    Route::post('/posts', 'PostController@store');
 
     Route::get('/user', 'Auth\UserController@current');
     Route::get('/posts', 'PostController@index');
     Route::get('/categories', 'CategoryController@index');
 
     Route::patch('/categories/{category}', 'CategoryController@update');
+    Route::patch('/posts/{post}', 'PostController@update');
     Route::patch('settings/profile', 'Settings\ProfileController@update');
     Route::patch('settings/password', 'Settings\PasswordController@update');
+
+    Route::delete('/categories/{category}', 'CategoryController@destroy');
+    Route::delete('/posts/{post}', 'PostController@destroy');
 });
 
 Route::group(['middleware' => 'guest:api'], function () {
