@@ -42,7 +42,7 @@ mix.then(() => {
 })
 
 function publishAseets () {
-  const publicDir = path.resolve(__dirname, './public')
+  const publicDir = path.resolve(__dirname, '/2020/g31/public')
 
   if (mix.inProduction()) {
     fs.removeSync(path.join(publicDir, 'dist'))
