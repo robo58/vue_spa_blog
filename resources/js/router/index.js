@@ -29,6 +29,7 @@ export default router
  */
 function createRouter () {
   const router = new Router({
+    base: '/2020/g31/',
     scrollBehavior,
     mode: 'history',
     routes
